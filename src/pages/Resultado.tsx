@@ -1,11 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NotaFiscalData } from '../types/ocrTypes';
 import CardResultado from '../components/CardResultado';
 import { ocrService } from '../service/ocrService';
 
-export default function ResultadoPage() {
+interface ResultadoProps {
+  imagemPreCarregada?: string | null;
+}
+
+export default function ResultadoPage({ imagemPreCarregada }: ResultadoProps = {}) {
   const [dados, setDados] = useState<NotaFiscalData | null>(null);
   const [carregando, setCarregando] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (imagemPreCarregada) {
+      lidarComEnvioDeImagem(imagemPreCarregada);
+    }
+  }, [imagemPreCarregada]);
 
   const lidarComEnvioDeImagem = async (base64String: string) => {
     setCarregando(true);
@@ -22,9 +32,11 @@ export default function ResultadoPage() {
   return (
     <div className="page-container">
       
-      <button onClick={() => lidarComEnvioDeImagem("string-base64-falsa")}>
-        Simular Upload de Nota Fiscal
-      </button>
+      {!imagemPreCarregada && (
+        <button onClick={() => lidarComEnvioDeImagem("string-base64-falsa")}>
+          Simular Upload de Nota Fiscal
+        </button>
+      )}
 
       {carregando && <p>Processando documento com IA...</p>}
 

@@ -4,7 +4,7 @@ import CardResultado from '../components/CardResultado';
 import { ocrService } from '../service/ocrService';
 
 interface ResultadoProps {
-  imagemPreCarregada?: string | null;
+  imagemPreCarregada?: any | null;
 }
 
 export default function ResultadoPage({ imagemPreCarregada }: ResultadoProps = {}) {
@@ -17,7 +17,7 @@ export default function ResultadoPage({ imagemPreCarregada }: ResultadoProps = {
     }
   }, [imagemPreCarregada]);
 
-  const lidarComEnvioDeImagem = async (base64String: string) => {
+  const lidarComEnvioDeImagem = async (base64String: any) => {
     setCarregando(true);
     try {
       const resultado = await ocrService.enviarImagemParaOCR(base64String);

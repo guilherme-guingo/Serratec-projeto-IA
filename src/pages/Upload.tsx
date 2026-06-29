@@ -2,44 +2,47 @@ import React, { useState } from 'react';
 import './Upload.css';
 
 interface UploadProps {
-  onImageSubmit?: (base64String: string) => void;
+  onImageSubmit?: (file: File) => void;
 }
 
 export default function UploadPage({ onImageSubmit }: UploadProps) {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [rawFile, setRawFile] = useState<File | null>(null);
   const [isDragging, setIsDragging] = useState(false);
-  
+
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
     setIsDragging(true);
   };
-  
+
   const handleDragLeave = (e: React.DragEvent) => {
     e.preventDefault();
     setIsDragging(false);
   };
-  
+
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     setIsDragging(false);
-    
+
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       processFile(e.dataTransfer.files[0]);
     }
   };
-  
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       processFile(e.target.files[0]);
     }
   };
-  
+
   const processFile = (file: File) => {
     if (!file.type.startsWith('image/')) {
       alert('Por favor, selecione um arquivo de imagem válido.');
       return;
     }
-    
+
+    setRawFile(file);
+
     const reader = new FileReader();
     reader.onload = (e) => {
       if (e.target && typeof e.target.result === 'string') {
@@ -48,31 +51,32 @@ export default function UploadPage({ onImageSubmit }: UploadProps) {
     };
     reader.readAsDataURL(file);
   };
-  
+
   const handleRemove = (e: React.MouseEvent) => {
     e.preventDefault();
     setImagePreview(null);
+    setRawFile(null);
   };
-  
+
   const handleSubmit = () => {
-    if (!imagePreview) return;
-    
-    // Futura integração com o n8n poderá ser implementada aqui
-    console.log("Enviando imagem (para n8n futuramente)...", imagePreview.substring(0, 50) + "...");
-    
+    if (!imagePreview || !rawFile) return;
+
+    // Nota ao Guilherme: Futura integração com o n8n poderá ser implementada aqui (enviando rawFile via FormData)
+    console.log("Enviando arquivo (para n8n futuramente)... Arquivo:", rawFile.name);
+
     if (onImageSubmit) {
-      onImageSubmit(imagePreview);
+      onImageSubmit(rawFile);
     }
   };
-  
+
   return (
     <div className="upload-page">
       <div className="upload-card">
         <h1 className="upload-title">Análise de Documentos</h1>
         <p className="upload-subtitle">Faça o upload da sua imagem para processamento</p>
-        
+
         {!imagePreview ? (
-          <div 
+          <div
             className={`drop-zone ${isDragging ? 'active' : ''}`}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
@@ -87,10 +91,10 @@ export default function UploadPage({ onImageSubmit }: UploadProps) {
             </div>
             <p>Arraste e solte sua imagem aqui ou</p>
             <p style={{ color: '#8b5cf6', fontWeight: 600, marginTop: '0.5rem' }}>Clique para procurar</p>
-            <input 
-              type="file" 
-              className="file-input" 
-              accept="image/*" 
+            <input
+              type="file"
+              className="file-input"
+              accept="image/*"
               onChange={handleFileChange}
             />
           </div>
@@ -105,9 +109,9 @@ export default function UploadPage({ onImageSubmit }: UploadProps) {
             <img src={imagePreview} alt="Preview" className="image-preview" />
           </div>
         )}
-        
-        <button 
-          className="submit-btn" 
+
+        <button
+          className="submit-btn"
           disabled={!imagePreview}
           onClick={handleSubmit}
         >

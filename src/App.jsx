@@ -5,9 +5,14 @@ import UploadPage from './pages/Upload'
 export const App = () => {
   const [imagemEnviada, setImagemEnviada] = useState(null)
 
-  const handleImageSubmit = (base64) => {
-    // Aqui você pode enviar a imagem para o n8n no futuro
-    setImagemEnviada(base64)
+  const handleImageSubmit = (file) => {
+    // Nota: Guileherme, Aqui você pode enviar a imagem para o n8n no futuro
+    // Exemplo: 
+    // const formData = new FormData();
+    // formData.append('file', file);
+    // fetch('SUA_URL_N8N_AQUI', { method: 'POST', body: formData })
+    
+    setImagemEnviada(file)
   }
 
   return (

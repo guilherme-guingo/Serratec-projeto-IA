@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import './Upload.css';
 
@@ -36,8 +37,20 @@ export default function UploadPage({ onImageSubmit }: UploadProps) {
   };
 
   const processFile = (file: File) => {
-    if (!file.type.startsWith('image/')) {
-      alert('Por favor, selecione um arquivo de imagem válido.');
+    const formatosPermitidos = ['image/jpeg', 'image/png', 'image/webp'];
+
+    if (!formatosPermitidos.includes(file.type)) {
+      alert('Formato inválido. Por favor, envie apenas imagens JPG, PNG ou WEBP.');
+      return;
+    }
+
+    if (file.size === 0) {
+      alert('O arquivo selecionado está vazio ou corrompido.');
+      return;
+    }
+
+    if (file.size > 4 * 1024 * 1024) {
+      alert('O arquivo não pode ser maior que 4MB.');
       return;
     }
 
@@ -61,7 +74,6 @@ export default function UploadPage({ onImageSubmit }: UploadProps) {
   const handleSubmit = () => {
     if (!imagePreview || !rawFile) return;
 
-    // Nota ao Guilherme: Futura integração com o n8n poderá ser implementada aqui (enviando rawFile via FormData)
     console.log("Enviando arquivo (para n8n futuramente)... Arquivo:", rawFile.name);
 
     if (onImageSubmit) {
@@ -77,7 +89,7 @@ export default function UploadPage({ onImageSubmit }: UploadProps) {
 
         {!imagePreview ? (
           <div
-            className={`drop-zone ${isDragging ? 'active' : ''}`}
+            className={`drop - zone ${isDragging ? 'active' : ''} `}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}

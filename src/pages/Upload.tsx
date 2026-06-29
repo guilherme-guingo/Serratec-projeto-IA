@@ -1,6 +1,8 @@
 
 import React, { useState } from 'react';
 import './Upload.css';
+import { useOcr } from '../contexts/OcrContext';
+
 
 interface UploadProps {
   onImageSubmit?: (file: File) => void;
@@ -10,6 +12,8 @@ export default function UploadPage({ onImageSubmit }: UploadProps) {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [rawFile, setRawFile] = useState<File | null>(null);
   const [isDragging, setIsDragging] = useState(false);
+
+  const { processarDocumento } = useOcr();
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
@@ -79,6 +83,7 @@ export default function UploadPage({ onImageSubmit }: UploadProps) {
     if (onImageSubmit) {
       onImageSubmit(rawFile);
     }
+    processarDocumento(rawFile);
   };
 
   return (

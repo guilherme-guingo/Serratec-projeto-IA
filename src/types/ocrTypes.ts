@@ -5,9 +5,9 @@ export interface ItemNota {
 }
 
 export interface NotaFiscalData {
-  estabelecimento: string;
+  empresa: string;
   cnpj: string;
   data: string;
-  valor_total: number;
   itens: ItemNota[];
+  valor_total: number;
 }

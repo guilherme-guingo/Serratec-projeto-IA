@@ -1,29 +1,19 @@
-import React, { useState } from 'react'
-import Resultado from './pages/Resultado'
-import UploadPage from './pages/Upload'
+import React from 'react';
+import UploadPage from './pages/Upload';
+import ResultadoPage from './pages/Resultado';
+import { useOcr } from './contexts/OcrContext';
 
-export const App = () => {
-  const [imagemEnviada, setImagemEnviada] = useState(null)
+export default function App() {
 
-  const handleImageSubmit = (file) => {
-    // Nota: Guileherme, Aqui você pode enviar a imagem para o n8n no futuro
-    // Exemplo: 
-    // const formData = new FormData();
-    // formData.append('file', file);
-    // fetch('SUA_URL_N8N_AQUI', { method: 'POST', body: formData })
-    
-    setImagemEnviada(file)
-  }
+  const { dadosDaNota } = useOcr();
 
   return (
-    <>
-      {!imagemEnviada ? (
-        <UploadPage onImageSubmit={handleImageSubmit} />
+    <main>
+      {!dadosDaNota ? (
+        <UploadPage />
       ) : (
-        <Resultado imagemPreCarregada={imagemEnviada} />
+        <ResultadoPage />
       )}
-    </>
-  )
+    </main>
+  );
 }
-
-export default App

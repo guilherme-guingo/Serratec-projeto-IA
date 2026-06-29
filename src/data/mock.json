@@ -1,11 +1,11 @@
 {
-  "estabelecimento": "Luthieria e Música Serrana Ltda",
-  "cnpj": "12.345.678/0001-99",
+  "empresa": "Luthieria e Música Serrana Ltda",
+  "cnpj": "12345678000199",
   "data": "28/06/2026",
-  "valor_total": 479.90,
   "itens": [
-    { "nome": "Jogo de Cordas Guitarra 0.10 Elixir", "quantidade": 2, "preco": 120.00 },
-    { "nome": "Cabo P10 Profissional Ninja 3m", "quantidade": 1, "preco": 65.90 },
-    { "nome": "Palheta Dunlop Jazz III XL", "quantidade": 5, "preco": 10.00 }
-  ]
+    { "nome": "Jogo de Cordas Guitarra 0.10 Elixir", "quantidade": 2.0, "preco": 120.00 },
+    { "nome": "Cabo P10 Profissional Ninja 3m", "quantidade": 1.0, "preco": 65.90 },
+    { "nome": "Palheta Dunlop Jazz III XL", "quantidade": 5.0, "preco": 10.00 }
+  ],
+  "valor_total": 355.90
 }

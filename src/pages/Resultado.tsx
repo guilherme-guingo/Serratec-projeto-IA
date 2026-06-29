@@ -1,46 +1,39 @@
-import React, { useState, useEffect } from 'react';
-import { NotaFiscalData } from '../types/ocrTypes';
+import React from 'react';
 import CardResultado from '../components/CardResultado';
-import { ocrService } from '../service/ocrService';
+import { useOcr } from '../contexts/OcrContext';
 
-interface ResultadoProps {
-  imagemPreCarregada?: any | null;
-}
 
-export default function ResultadoPage({ imagemPreCarregada }: ResultadoProps = {}) {
-  const [dados, setDados] = useState<NotaFiscalData | null>(null);
-  const [carregando, setCarregando] = useState<boolean>(false);
+export default function ResultadoPage() {
+  const { dadosDaNota, carregando, erro } = useOcr();
 
-  useEffect(() => {
-    if (imagemPreCarregada) {
-      lidarComEnvioDeImagem(imagemPreCarregada);
-    }
-  }, [imagemPreCarregada]);
+  if (carregando) {
+    return (
+      <div className="page-container">
+        <p className="mensagem-carregamento">Processando documento</p>
+      </div>
+    );
+  }
 
-  const lidarComEnvioDeImagem = async (base64String: any) => {
-    setCarregando(true);
-    try {
-      const resultado = await ocrService.enviarImagemParaOCR(base64String);
-      setDados(resultado);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setCarregando(false);
-    }
-  };
+  if (erro) {
+    return (
+      <div className="page-container">
+        <p className="erro-texto">{erro}</p>
+      </div>
+    );
+  }
+
+  if (!dadosDaNota) {
+    return (
+      <div className="page-container">
+        <p>Aguardando envio do documento...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="page-container">
-      
-      {!imagemPreCarregada && (
-        <button onClick={() => lidarComEnvioDeImagem("string-base64-falsa")}>
-          Simular Upload de Nota Fiscal
-        </button>
-      )}
-
-      {carregando && <p>Processando documento com IA...</p>}
-
-      {dados && !carregando && <CardResultado dados={dados} />}
+      <h1>Resultados da Auditoria</h1>
+      <CardResultado dados={dadosDaNota} />
     </div>
   );
 }

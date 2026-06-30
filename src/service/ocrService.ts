@@ -1,3 +1,5 @@
+/// <reference types="vite/client" />
+
 import { NotaFiscalData } from '../types/ocrTypes';
 import mock from '../data/mock.json';
 
@@ -25,7 +27,7 @@ export const ocrService = {
       console.log("2_OBJETO_PARSADO_DO_N8N:", objetoN8n);
 
       let textoDaIA = "";
-      
+
       if (Array.isArray(objetoN8n) && objetoN8n[0]?.content?.parts?.[0]?.text) {
         textoDaIA = objetoN8n[0].content.parts[0].text;
       } else if (objetoN8n?.content?.parts?.[0]?.text) {
@@ -45,9 +47,9 @@ export const ocrService = {
       console.log("5_DADOS_FINAIS_STRUTURADOS:", dadosRetornados);
 
       return dadosRetornados as NotaFiscalData;
-      
+
     } catch (error) {
-      console.error("ERRO_DETECTADO_NO_FLUXO_OCR:", error);
+      console.error("ERRO_DETECTADO_NO_FLUXO_OCR::", error);
       return new Promise((resolve) => setTimeout(() => resolve(mock as NotaFiscalData), 1500));
     }
   }

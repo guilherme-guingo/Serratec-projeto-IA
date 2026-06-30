@@ -1,4 +1,3 @@
-import React from 'react';
 import { useOcr } from '../contexts/OcrContext';
 import CardResultado from '../components/CardResultado/CardResultado';
 import './Resultado.css';

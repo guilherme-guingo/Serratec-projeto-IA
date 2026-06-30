@@ -13,6 +13,18 @@ export default function CardResultado({ dados }: CardResultadoProps) {
     return isNaN(valor) ? "0.00" : valor.toFixed(2);
   };
 
+  const formatarData = (dataString: string | undefined) => {
+    if (!dataString) return 'Data não disponível';
+    
+    const partes = dataString.split('-'); 
+    
+    if (partes.length === 3) {
+      return `${partes[2]}/${partes[1]}/${partes[0]}`; 
+    }
+    
+    return dataString; 
+  };
+
   if (!dados) return null;
 
   return (

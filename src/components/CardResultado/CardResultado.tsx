@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 import './Card.css';
 import { NotaFiscalData } from '../../types/ocrTypes';
 

@@ -1,13 +1,11 @@
-import React from 'react';
 import './Card.css';
-import { NotaFiscalData } from '../types/ocrTypes';
+import { NotaFiscalData } from '../../types/ocrTypes';
 
 interface CardResultadoProps {
   dados: NotaFiscalData;
 }
 
 export default function CardResultado({ dados }: CardResultadoProps) {
-  // Função de segurança para garantir que sempre teremos um número formatado
   const formatarPreco = (preco: number | string | undefined) => {
     const valor = Number(preco);
     return isNaN(valor) ? "0.00" : valor.toFixed(2);
@@ -15,14 +13,14 @@ export default function CardResultado({ dados }: CardResultadoProps) {
 
   const formatarData = (dataString: string | undefined) => {
     if (!dataString) return 'Data não disponível';
-    
-    const partes = dataString.split('-'); 
-    
+
+    const partes = dataString.split('-');
+
     if (partes.length === 3) {
-      return `${partes[2]}/${partes[1]}/${partes[0]}`; 
+      return `${partes[2]}/${partes[1]}/${partes[0]}`;
     }
-    
-    return dataString; 
+
+    return dataString;
   };
 
   if (!dados) return null;

@@ -1,4 +1,5 @@
 import React from 'react';
+import './Card.css';
 import { NotaFiscalData } from '../types/ocrTypes';
 
 interface CardResultadoProps {

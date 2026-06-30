@@ -1,7 +1,7 @@
 import React from 'react';
-import CardResultado from '../components/CardResultado';
 import { useOcr } from '../contexts/OcrContext';
-
+import CardResultado from '../components/CardResultado/CardResultado';
+import './Resultado.css';
 
 export default function ResultadoPage() {
   const { dadosDaNota, carregando, erro } = useOcr();

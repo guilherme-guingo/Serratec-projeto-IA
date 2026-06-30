@@ -33,7 +33,13 @@ export default function ResultadoPage() {
   return (
     <div className="page-container">
       <h1>Resultados da Auditoria</h1>
-      <CardResultado dados={dadosDaNota} />
+      {dadosDaNota.map((dados, index) => {
+        return (
+          <div key={index}>
+            <CardResultado dados={dados} />
+          </div>
+        )
+      })}
     </div>
   );
 }

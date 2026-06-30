@@ -33,13 +33,9 @@ export default function ResultadoPage() {
   return (
     <div className="page-container">
       <h1>Resultados da Auditoria</h1>
-      {dadosDaNota.map((dados, index) => {
-        return (
-          <div key={index}>
-            <CardResultado dados={dados} />
-          </div>
-        )
-      })}
+      
+      {/* Agora chamamos o Card uma única vez, passando a nota inteira */}
+      <CardResultado dados={dadosDaNota} />
     </div>
   );
 }

@@ -5,14 +5,14 @@ import { useOcr } from './contexts/OcrContext';
 
 export default function App() {
 
-  const { dadosDaNota } = useOcr();
+  const { dadosDaNota, carregando } = useOcr();
 
   return (
     <main>
-      {!dadosDaNota ? (
-        <UploadPage />
-      ) : (
+      {(dadosDaNota || carregando) ? (
         <ResultadoPage />
+      ) : (
+        <UploadPage />
       )}
     </main>
   );
